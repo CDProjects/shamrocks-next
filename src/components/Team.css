@@ -1,0 +1,71 @@
+.team-section {
+    text-align: center;
+    padding-top: 60px;
+    padding-bottom: 100px; /* Adjust this value based on your footer's height */
+  }
+  
+  .team-section h2 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+  
+  .team-picture {
+    width: 100%;
+    max-width: 800px;
+    margin: 10px auto;
+    margin-bottom: 10px;
+  }
+  
+  .roster {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+  }
+  
+  .forwards,
+  .backs {
+    width: 40%;
+  }
+  
+  .forwards p,
+  .backs p {
+    margin: 3px 0;
+  }
+  
+  .coaches {
+    margin-top: 20px;
+  }
+  
+  .coaches p {
+    margin: 3px 0;
+  }
+  
+  /* Include any responsive styles for the team section here */
+  @media (min-width: 1025px) {
+    .team-section {
+      background-color: black;
+    }
+  
+    .team-picture {
+      max-width: 1000px;
+    }
+  
+    .forwards h3,
+    .backs h3 {
+      font-size: 25px;
+    }
+  
+    .forwards p,
+    .backs p,
+    .coaches p {
+      font-size: 23px;
+    }
+  }
+
+  @media (min-width: 430px) {
+    .team-section {
+        padding-bottom: 100px; /* Adjust this value as needed */
+    }
+}
+  
+  /* Add other media queries as needed */

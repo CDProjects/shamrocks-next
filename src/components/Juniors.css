@@ -1,0 +1,90 @@
+/* src/Components/Juniors.css */
+
+.juniors-section {
+  background: #000;
+  color: #fff;
+  padding: 60px 20px 100px;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 40px;
+}
+
+/* ─── Scope the inner container so it does NOT override the global .content‐container ───────── */
+#juniors-section .content-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+/* ──────────────────────────────────────────────────────────────────────────────────────────────── */
+
+.responsive-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.two-up-row {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  flex-wrap: wrap;  
+}
+
+.text-block .content-container p {
+  font-size: 15px;
+  line-height: 1.5;
+  margin-bottom: 1em;
+  text-align: center;
+}
+
+.juniors-english {
+  display: none;
+}
+
+/* ───────────────────────────────────────────────────────────────────────────────────────────────
+   Desktop (≥1025px)
+────────────────────────────────────────────────────────────────────────────────────────────────── */
+
+@media (min-width: 1025px) {
+
+  .two-up-row {
+    display: flex;
+  }
+
+  .top-images-wrapper {
+    max-width: 1200px;
+    gap: 20px; 
+    margin-bottom: 20px;
+  }
+
+  .play-images-wrapper {
+    max-width: 1200px;
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  /* Updated to target <img> instead of <picture> */
+  .top-images-wrapper img,
+  .play-images-wrapper img {
+    flex: 0 0 360px;
+    max-width: 360px;
+  }
+
+  .text-block .content-container {
+    max-width: 1200px;
+    margin: 0 auto 20px;
+    text-align: left;
+  }
+
+  .juniors-english {
+    display: block;
+    margin-top: 1em;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────────────────────── #END */

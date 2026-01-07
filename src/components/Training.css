@@ -1,0 +1,64 @@
+.training-section.training-page {
+    text-align: center;
+    padding-top: 60px;
+    background-color: #000000;
+    color: #ffffff;
+  }
+  
+  .training-section.training-page .section-title {
+    font-size: 30px;
+    margin: 0 0 20px 0;
+  }
+  
+  .training-section.training-page .training-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .training-section.training-page .training-item {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  
+  .training-section.training-page h3 {
+    margin: 0 0 10px 0;
+  }
+  
+  .training-section.training-page p {
+    margin: 0 0 10px 0;
+  }
+  
+  .training-section.training-page .map {
+    height: 250px;
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  
+  .training-section.training-page .map-link {
+    display: inline-block;
+    margin-top: 5px;
+    margin-bottom: 20px; 
+    color: #ffffff;
+    text-decoration: underline;
+  }
+  
+  .training-section.training-page .map-link:hover {
+    text-decoration: none;
+  }
+  
+  @media (min-width: 768px) {
+    .training-section.training-page .training-container {
+      max-width: 600px;
+    }
+  }
+  
+  @media (min-width: 1025px) {
+    .training-section.training-page .training-container {
+      max-width: 800px;
+    }
+  }

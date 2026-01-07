@@ -1,0 +1,88 @@
+/* src/Components/Footer.css */
+:root {
+  --local-banner-height: 70px;
+}
+
+.sponsor-carousel-banner-section {
+  width: 100%;
+  background-color: black;
+  padding: 5px 0;
+  height: var(--local-banner-height);
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  margin-top: 0;
+  margin-bottom: 0; /* No gap between banner and SponsorGrid */
+  flex-shrink: 0; /* Prevent shrinking */
+}
+
+.sponsor-carousel-banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+.sponsor-carousel-swiper {
+  width: 100%;
+  height: calc(var(--local-banner-height) - 2 * 5px);
+}
+
+.sponsor-logo-slide, .sponsor-text-slide {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.sponsor-carousel-image {
+  height: 40px;
+  max-height: calc(var(--local-banner-height) - 2 * 5px - 10px);
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.sponsor-logo-slide a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.sponsor-text-slide p {
+  color: white;
+  font-size: 0.75rem;
+  padding: 0 5px;
+  margin: 0;
+  font-style: italic;
+  line-height: 1.2;
+  white-space: normal;
+}
+
+@media (min-width: 768px) {
+  .sponsor-carousel-banner-content { padding: 0 20px; }
+  .sponsor-text-slide p { font-size: 0.85rem; }
+}
+
+@media (min-width: 1025px) {
+  .sponsor-carousel-banner-section {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .sponsor-carousel-banner-content { padding: 0 20px; }
+  .sponsor-text-slide p { font-size: 0.9rem; }
+}
+
+.sponsor-carousel-banner-section.team-page-variant {
+  /* specific styles */
+}

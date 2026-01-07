@@ -1,0 +1,85 @@
+/* Contact.css */
+body.contact-page {
+    overflow: hidden;
+  }
+
+#contact-section {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 60px 0 0;
+    background-color: #000000;
+    color: #ffffff;
+    text-align: center;
+    position: relative; /* Add this */
+    padding-bottom: 100px; /* Adjust based on your footer height */
+}
+
+#contact-section .content-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Change to flex-start */
+    padding: 0 20px;
+    overflow-y: auto; /* Allow scrolling if content exceeds viewport */
+    max-height: calc(100vh - 160px); /* Adjust based on your header and footer height */
+}
+
+#contact-section .section-title {
+    font-size: 30px;
+    margin: 0 0 20px;
+}
+
+#contact-section .contact-info {
+    margin-bottom: 20px;
+}
+
+#contact-section .contact-info h3 {
+    margin: 10px 0;
+}
+
+#contact-section .contact-info p {
+    margin: 5px 0;
+}
+
+#contact-section .contact-image {
+    width: 80%;
+    max-width: 300px;
+    max-height: 30vh;
+    object-fit: contain;
+    margin: 0 auto; /* Remove top and bottom margin */}
+
+#contact-section .logo-container {
+    margin-top: -40px; /* Adjust this value as needed */
+}
+
+@media (max-width: 767px) {
+    #contact-section .content-container {
+      width: 100%;
+      padding-left: 15px;
+      padding-right: 15px;
+      box-sizing: border-box;
+    }
+  }
+
+@media (min-width: 768px) {
+    #contact-section .content-container {
+        padding: 0 40px;
+    }
+
+    #contact-section .contact-image {
+        max-width: 400px;
+        max-height: 35vh;
+    }
+}
+
+@media (min-width: 1024px) {
+    #contact-section .content-container {
+        padding: 0 60px;
+    }
+
+    #contact-section .contact-image {
+        max-width: 500px;
+        max-height: 40vh;
+    }
+}

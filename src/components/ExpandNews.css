@@ -1,0 +1,159 @@
+/* src/Components/ExpandNews.css */
+
+.expandable-article {
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 10px;
+  background-color: #111;
+  /* Adds a buffer so the auto-scroll doesn't hide the title behind the menu */
+  scroll-margin-top: 100px;
+}
+
+.expandable-article.expanded {
+  background-color: #000;
+}
+
+.article-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.title-section {
+  display: flex;
+  flex-grow: 1;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  width: 100%; /* Ensure it takes full width */
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2e8b57;
+  margin: 0 0 4px 0;
+  line-height: 24px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.date {
+  font-size: 14px;
+  color: #666;
+  line-height: 20px;
+  text-align: left;
+}
+
+/* --- SHARE BUTTONS STYLING --- */
+
+.share-buttons-wrapper {
+  margin-top: 8px; /* Space between date and buttons */
+  width: 100%;
+}
+
+.share-buttons-container {
+  display: flex;
+  gap: 6px; /* Space between icons */
+  align-items: center; /* Vertically center the row */
+  height: 24px; /* Lock height to match buttons */
+}
+
+/* Fix for the library buttons (Facebook/Whatsapp) to align perfectly */
+.react-share-btn-fix {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  width: 24px;
+  padding: 0;
+  margin: 0;
+  line-height: 0; /* Prevents text spacing issues */
+  outline: none;
+}
+
+/* Styles for the custom buttons (Insta, Copy) to match react-share squares */
+.custom-share-btn {
+  display: flex; /* Critical for centering the icon inside */
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  padding: 0;
+  margin: 0;
+  line-height: 0;
+  text-decoration: none;
+  box-sizing: border-box; 
+}
+
+.custom-share-btn:hover {
+  opacity: 0.8;
+}
+
+.copied-message {
+  font-size: 12px;
+  color: #2e8b57;
+  margin-left: 8px;
+  line-height: 24px; /* Align text with buttons */
+  animation: fadeOut 2s forwards;
+}
+
+/* Hide mobile share on desktop */
+.mobile-only {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-only {
+    display: flex;
+  }
+}
+
+/* --- END SHARE BUTTONS --- */
+
+.article-content {
+  margin-top: 16px;
+  color: #bbb;
+  padding-left: 40px;
+  padding-right: 16px;
+  text-align: left;
+}
+
+.article-content p {
+  margin-bottom: 16px;
+  max-width: 100%;
+}
+
+.article-image {
+  max-width: 100%;
+  height: auto;
+  margin: 24px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .article-image {
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; }
+}

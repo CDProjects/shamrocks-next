@@ -1,0 +1,88 @@
+/* 1) Wrapper: top + side + bottom padding so content clears footer */
+.touch-section.touch-page {
+  text-align: center;        /* centers H1 + poster */
+  padding: 60px 20px 120px;  /* 60px top, 20px sides, 120px bottom */
+}
+
+/* Tablet: increase side padding (bottom stays 120px) */
+@media (min-width: 768px) {
+  .touch-section.touch-page {
+    padding: 60px 40px 120px;
+  }
+}
+
+/* Desktop: even more side padding (bottom stays 120px) */
+@media (min-width: 1024px) {
+  .touch-section.touch-page {
+    padding: 60px 60px 120px;
+  }
+}
+
+/* 2) Page title: exactly match Contact/Training (30px, 20px bottom, centered) */
+.touch-title {
+  font-size: 30px;
+  margin: 0 0 20px;
+  text-align: center;
+  font-weight: 700;
+}
+
+/* 3) Poster styling (unchanged) */
+.touch-poster-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+.touch-poster {
+  max-width: 800px;
+  width: 100%;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* 4) General section spacing */
+.touch-section {
+  margin-bottom: 2rem;
+}
+
+/* 5) Body-copy left-aligned for readability */
+.touch-section.touch-page .touch-section {
+  text-align: left;
+}
+
+/* 6) Sub-headings: size + weight unchanged but centered */
+.touch-section h2 {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* 7) Paragraphs & lists: line-height + spacing */
+.touch-section p {
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+}
+.touch-section ul {
+  list-style: disc inside;
+  margin-bottom: 0.75rem;
+}
+
+/* 8) Q/A blocks: spacing + question weight */
+.touch-qa {
+  margin-bottom: 1.5rem;
+}
+.touch-qa .question {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.touch-link {
+  color: #00ffcc !important;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.touch-link:hover {
+  color: #ffffff !important;
+  text-decoration: none;
+}

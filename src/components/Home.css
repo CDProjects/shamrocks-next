@@ -1,0 +1,120 @@
+/* src/Components/Home.css */
+
+/* If body.home-page { overflow: hidden; } exists, REMOVE IT.
+   Page needs to scroll to show content below .home-section. */
+
+.home-section {
+  position: relative;
+  width: 100%;
+  /* Original height calculation - keeping this as it was */
+  height: calc(100vh - var(--sponsor-carousel-banner-height, 70px));
+  background-color: #000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Override content-container height specifically for home page */
+body.home-page .content-container {
+  height: calc(100vh - 35px - 50px); /* Show only top 50px of banner (logos only) */
+  max-height: calc(100vh - 35px - 50px);
+  overflow: hidden;
+}
+
+.carousel-container {
+  position: absolute;
+  top: 0;
+  left: 40%;
+  width: 50%;
+  height: 100%;
+  z-index: 1;
+}
+.carousel { width: 100%; height: 100%; }
+.carousel-item { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; }
+.carousel-item.active { opacity: 1; }
+.carousel-item img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+
+.home-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 1rem;
+  padding-bottom: 0;
+  z-index: 2;
+  box-sizing: border-box;
+}
+
+.content-wrapper {
+  width: 100%;
+  max-width: 30rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.home-title { font-size: 3rem; margin-bottom: 1rem; color: white; }
+.home-paragraph { font-size: 1.2rem; margin-bottom: 2rem; color: white; }
+.about-us-btn { display: inline-block; padding: 0.625rem 1.25rem; background-color: #2e8b57; color: white; text-decoration: none; border-radius: 0.3125rem; transition: background-color 0.3s ease; }
+.about-us-btn:hover { background-color: #3cb371; }
+
+/* MEDIA QUERIES */
+@media (max-width: 48em) {
+  .home-title { font-size: 1.8rem; }
+  .home-paragraph { font-size: 0.9rem; }
+  .content-wrapper { margin-bottom: 1.5rem; }
+  .home-content { padding: 1rem; }
+}
+@media (min-width: 768px) {
+  .content-wrapper { margin-left: 1rem; margin-bottom: 10%; }
+}
+@media (max-width: 1024px) {
+  .carousel-container { left: 0; width: 100%; }
+  .content-wrapper { margin-bottom: 4rem; }
+}
+@media (min-width: 1025px) {
+  body.home-page .content-container {
+    width: 70%;
+    margin: 0 auto;
+  }
+  .carousel-container { left: 30%; width: 70%; height: 60%; top: 6%; }
+  .home-club-medium { position: absolute; left: 17%; top: 10%; }
+  .home-image-medium { width: 120px; }
+  .home-club-medium h1 { font-size: 23px; }
+  .home-club-medium h2 { font-size: 17px; }
+  .home-section .home-content .content-wrapper {
+    position: absolute; left: 19%; bottom: 10%;
+    width: 30%; margin: 0; text-align: left;
+  }
+  .home-section .home-content .content-wrapper .home-title { font-size: 2rem !important; }
+  .home-section .home-content .content-wrapper .home-paragraph { font-size: .9rem !important; }
+  .home-section .home-content .content-wrapper {
+    bottom: auto     !important;  /* cancel the old bottom:10% */
+    top:   40%       !important;  /* how far down on desktop */
+    left:  6.5%       !important;  /* match your existing left:19% */
+  }
+
+}
+
+
+@media (min-width: 1200px) {
+  .carousel-container { left: 20%; width: 85%; height: calc(100% - 30px); top: -3%; }
+}
+@media (min-width: 1600px) {
+  .home-club-medium { left: 19%; top: 10%; }
+  .home-image-medium { width: 180px; }
+  .home-club-medium h1 { font-size: 35px; }
+  .home-club-medium h2 { font-size: 25px; }
+  .home-section .home-content .content-wrapper { left: 20%; bottom: 15%; width: 35%; }
+  .home-section .home-content .content-wrapper .home-title { font-size: 3rem !important; }
+  .home-section .home-content .content-wrapper .home-paragraph { font-size: 1.5rem !important; }
+  .carousel-container { left: 40%; width: 55%; height: 80%; top: 10%; }
+}
+@media (min-width: 1920px) {
+  .carousel-item img { object-position: center 25%; }
+  .carousel-container { left: 40%; width: 55%; height: 90%; top: 1%; }
+}

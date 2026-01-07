@@ -1,0 +1,110 @@
+/* src/Components/MedRec.css */
+.med-rec-container {
+    padding: 20px;
+    background-color: #000000;
+    color: white;
+    font-family: "Oswald", sans-serif;
+}
+
+.media-section, .recruitment-section {
+    text-align: center;
+    padding-top: 40px;
+    color: #ffffff;
+}
+
+.section-title, .recruiting-section-title {
+    text-align: center;
+    font-size: 30px;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.med-rec-container .media-icons {
+    display: flex;
+    justify-content: center;
+    width: auto;
+    margin: 20px auto;
+}
+
+.med-rec-container .media-icon {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    margin: 0 10px;
+    transition: transform 0.3s ease;
+}
+
+.med-rec-container .media-icon:hover {
+    transform: scale(1.1);
+}
+
+.recruiting-image {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    display: block;
+}
+
+.recruiting-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+.recruiting-content {
+    padding: 20px;
+}
+
+.recruiting-content h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: 20px;
+}
+
+.recruiting-content p, .recruiting-content ul {
+    font-size: 1rem;
+    padding: 0 1rem;
+    max-width: 82%;
+    margin: 0 auto 20px;
+    text-align: left;
+}
+
+.recruiting-content ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.recruiting-content li {
+    margin-bottom: 10px;
+}
+
+.recruitment-section {
+    scroll-margin-top: 60px; /* Adjust this value based on your navbar height */
+  }
+  
+  #recruiting-section {
+    scroll-margin-top: 60px; /* Adjust this value based on your navbar height */
+  }
+
+@media (min-width: 768px) {
+
+    .media-section {
+        text-align: center;
+        color: #ffffff;
+    }
+
+    .recruiting-content {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 1024px) {
+    .recruiting-content h2 {
+        font-size: 2rem;
+    }
+
+    .recruiting-content p, .recruiting-content ul {
+        font-size: 1.1rem;
+    }
+}

@@ -1,0 +1,159 @@
+/* ==========================================================================
+   Fixtures.css — Adjusted text-alignment for Time column
+   ========================================================================== */
+
+/* 1) Main wrapper: add horizontal padding on mobile so text isn’t flush to screen */
+.fixtures-section {
+  padding: 60px 20px calc(var(--footer-height) + 20px);
+  min-height: 100vh;      /* Fill at least the full viewport height */
+  text-align: center;
+  color: #ffffff;
+}
+
+/* 2) Competition‐table rules (for a separate HTML table, if used) */
+.competition-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 30px;
+}
+
+.competition-table {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.competition-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.competition-table th,
+.competition-table td {
+  border: 1px solid #ddd;
+  text-align: left;
+  white-space: nowrap;
+  height: 20px;
+  line-height: 0.8;
+  padding: 5px 8px;
+}
+
+.competition-table td:nth-child(n + 3),
+.competition-table th:nth-child(n + 3) {
+  text-align: center;
+}
+
+.competition-table td:nth-child(-n + 2),
+.competition-table th:nth-child(-n + 2) {
+  text-align: left;
+}
+
+.competition-table .team-info {
+  display: flex;
+  align-items: center;
+}
+
+.competition-table .team-info img {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.competition-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  color: #333;
+}
+
+.competition-table .sticky-col {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background-color: #fff;
+}
+
+/* 3) Banner image under the table (unchanged) */
+.fixtures-picture {
+  width: 100%;
+  max-width: 750px;
+  height: auto;
+  margin: 10px auto;
+}
+
+.fixtures-subtitle {
+  text-align: center;
+  margin: 5px 0;
+}
+
+/* ==========================================================================
+   4) Grid‐based layout for each fixture row so columns align neatly
+   ========================================================================== */
+
+/* Base (mobile) - This should remain good */
+.fixtures-text {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 55px 75px 1fr 60px; /* Date, Time, Teams, Score */
+  width: 100%;
+  max-width: 700px;
+  margin: 10px auto;
+  font-size: 14px;
+  column-gap: 10px;
+  /* white-space: nowrap; <-- ENSURE THIS IS REMOVED */
+}
+
+.fixtures-text .date {
+  text-align: left;
+}
+
+.fixtures-text .time {
+  text-align: left; /* CHANGED from center to left for consistency */
+}
+
+.fixtures-text .teams {
+  text-align: left;
+  overflow-wrap: break-word;
+}
+
+.fixtures-text .score {
+  text-align: right;
+}
+
+/* Tablet (≥768px) */
+@media (min-width: 768px) {
+  .fixtures-section {
+    padding: 60px 40px calc(var(--footer-height) + 20px);
+  }
+
+  .fixtures-text {
+    font-size: 16px;
+    grid-template-columns: 70px 90px 1fr 90px; /* Date, Time, Teams, Score */
+    max-width: 680px;
+    column-gap: 15px;
+    /* white-space: nowrap; <-- ENSURE THIS IS REMOVED */
+  }
+  /* .fixtures-text .time will inherit text-align: left from base style */
+}
+
+/* Desktop (≥1025px) - Laptop viewport focus */
+@media (min-width: 1025px) {
+  .fixtures-section {
+    padding: 60px 60px calc(var(--footer-height) + 20px);
+  }
+
+  .fixtures-text {
+    font-size: 17px;
+    grid-template-columns: 80px 100px 1fr 100px; /* Date, Time, Teams, Score */
+    width: 100%;
+    max-width: 620px;   /* Kept the reduced max-width */
+    margin: 10px auto;
+    column-gap: 15px;
+    /* white-space: nowrap; <-- ENSURE THIS IS REMOVED */
+  }
+  /* .fixtures-text .time will inherit text-align: left from base style */
+}
+
+/* ==========================================================================
+   End of Fixture‐row layout.
+   ========================================================================== */
