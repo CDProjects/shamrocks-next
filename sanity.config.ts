@@ -1,18 +1,20 @@
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
+// Import the type so TypeScript stops complaining
+import { type SchemaTypeDefinition } from 'sanity'
 
-// Define the schema types here (we will add more later)
-const schemaTypes = []
+// We explicitly tell TypeScript this is an array of SchemaTypeDefinitions
+const schemaTypes: SchemaTypeDefinition[] = []
 
 export default defineConfig({
   name: 'default',
   title: 'Shamrocks Admin',
 
-  projectId: 'a2r39toc', 
+  projectId: 'a2r39toc',
   dataset: 'production',
 
-  basePath: '/studio', // This tells Sanity to live at shamrocks.fi/studio
+  basePath: '/studio', 
 
   plugins: [structureTool(), visionTool()],
 
