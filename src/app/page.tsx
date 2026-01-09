@@ -1,35 +1,22 @@
 import { client } from "../sanity/client";
+import Home from "../components/Home"; // Your original Home component
 
-// This is a "Server Component". It runs on the server to be super fast.
 export default async function HomePage() {
   
-  // 1. Fetch the data from Sanity
-  // We ask for the _id, opponent, date, and score
-  const fixtures = await client.fetch(`*[_type == "fixture"]{
+  // 1. Fetch the data (Fixtures)
+  const fixtures = await client.fetch(`*[_type == "fixture"] | order(date asc) {
     _id,
     opponent,
     date,
-    score
+    score,
+    isHomeGame
   }`);
 
-  // 2. Display the data
+  // 2. Render the original design, passing the data down
+  // Note: Pass 'fixtures' as a prop to the Home component
   return (
-    <main style={{ padding: "40px", fontFamily: "sans-serif" }}>
-      <h1>Shamrocks RC - Upcoming Fixtures</h1>
-      
-      {/* If there are no fixtures, say so */}
-      {fixtures.length === 0 && <p>No fixtures found. Go to /studio to add one!</p>}
-
-      <div style={{ display: "grid", gap: "20px", marginTop: "20px" }}>
-        {fixtures.map((match: any) => (
-          <div key={match._id} style={{ border: "1px solid #ccc", padding: "20px", borderRadius: "8px" }}>
-            <h2 style={{ margin: 0 }}>Vs. {match.opponent}</h2>
-            {match.date && <p style={{ color: "gray" }}>{new Date(match.date).toDateString()}</p>}
-            <h3 style={{ color: "green" }}>Score: {match.score}</h3>
-          </div>
-        ))}
-      </div>
-
+    <main>
+      <Home fixtures={fixtures} />
     </main>
   );
 }

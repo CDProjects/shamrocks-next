@@ -1,6 +1,8 @@
+"use client"; // Next.js Client Component
 import React, { useState, useEffect, lazy, Suspense } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link"; // Next.js Link component
 import "./Home.css";
+
 
 // Lazy load image component
 const LazyImage = lazy(() => import('./LazyImage'));
@@ -8,30 +10,24 @@ const LazyImage = lazy(() => import('./LazyImage'));
 // Cloudinary Configuration
 const CLOUDINARY_CLOUD_NAME = "dscbso60s";
 const CLOUDINARY_BASE_URL = `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload`;
-const CLOUDINARY_TRANSFORMATIONS = "w_1600,f_auto,q_auto"; // Width 1600px, auto format, auto quality
+const CLOUDINARY_TRANSFORMATIONS = "w_1600,f_auto,q_auto";
 
-// Helper function to construct Cloudinary URLs from the provided full URLs
-// It extracts the version/public_id.format part and prepends transformations
+// Helper function to construct Cloudinary URLs
 const constructCloudinaryUrl = (originalUrl) => {
   if (!originalUrl || typeof originalUrl !== 'string') {
     console.error("Invalid original URL provided:", originalUrl);
-    return ""; // Or a placeholder image URL
+    return "";
   }
-  // Example originalUrl: https://res.cloudinary.com/dscbso60s/image/upload/v1748937312/Akseli_4_jlbpzt.png
-  // We need to extract "v1748937312/Akseli_4_jlbpzt.png"
   const parts = originalUrl.split("/image/upload/");
   if (parts.length < 2 || !parts[1]) {
     console.error("Cannot parse version/public_id from URL:", originalUrl);
-    return originalUrl; // Fallback to original if parsing fails, though it won't have transformations
+    return originalUrl;
   }
   const versionAndPublicIdWithPath = parts[1];
   return `${CLOUDINARY_BASE_URL}/${CLOUDINARY_TRANSFORMATIONS}/${versionAndPublicIdWithPath}`;
 };
 
-
-// Original master list of images - mapping to Cloudinary URLs
-// The 'originalSrc' is the direct Cloudinary URL you provided.
-// The 'src' will be the transformed URL.
+// Original master list of images
 const masterImagesList = [
   { originalSrc: "https://res.cloudinary.com/dscbso60s/image/upload/v1748937312/Akseli_4_jlbpzt.png", alt: "Akseli" },
   { originalSrc: "https://res.cloudinary.com/dscbso60s/image/upload/v1748937327/Ale_2_x8pie7.png", alt: "Ale" },
@@ -48,7 +44,7 @@ const masterImagesList = [
   { originalSrc: "https://res.cloudinary.com/dscbso60s/image/upload/v1748937496/Jimm_2_vi6flz.png", alt: "Jimm" },
   { originalSrc: "https://res.cloudinary.com/dscbso60s/image/upload/v1748937499/Jon_2_wbyudx.png", alt: "Jon" },
   { originalSrc: "https://res.cloudinary.com/dscbso60s/image/upload/v1748937526/Linus_3_nuypnd.png", alt: "Linus" },
-  { originalSrc: "https://res.cloudinary.com/dscbso60s/image/upload/v1748937527/Juuso_2_dzwhsm.png", alt: "Juuso" }, // Note: Original import was Juuso 3, URL says Juuso_2. Using URL.
+  { originalSrc: "https://res.cloudinary.com/dscbso60s/image/upload/v1748937527/Juuso_2_dzwhsm.png", alt: "Juuso" },
   { originalSrc: "https://res.cloudinary.com/dscbso60s/image/upload/v1748937609/Markus_2_km2pvo.png", alt: "Markus" },
   { originalSrc: "https://res.cloudinary.com/dscbso60s/image/upload/v1748937651/Niko_1_im7s8v.png", alt: "Niko" },
   { originalSrc: "https://res.cloudinary.com/dscbso60s/image/upload/v1748937667/Otto_2_x0fxxj.png", alt: "Otto" },
@@ -60,12 +56,12 @@ const masterImagesList = [
   { originalSrc: "https://res.cloudinary.com/dscbso60s/image/upload/v1748938037/Tobias_2_dzj7sa.png", alt: "Tobias" },
   { originalSrc: "https://res.cloudinary.com/dscbso60s/image/upload/v1748938159/Tommi_3_zybzvh.png", alt: "Tommi" },
   { originalSrc: "https://res.cloudinary.com/dscbso60s/image/upload/v1748938165/Tommi_K_1_dparrq.png", alt: "Tommi K" },
-  { originalSrc: "https://res.cloudinary.com/dscbso60s/image/upload/v1748938131/Tommi_P_2_zwo1du.png", alt: "Tommi P" }, // Note: Original import was Tommi P 3, URL says Tommi_P_2. Using URL.
+  { originalSrc: "https://res.cloudinary.com/dscbso60s/image/upload/v1748938131/Tommi_P_2_zwo1du.png", alt: "Tommi P" },
   { originalSrc: "https://res.cloudinary.com/dscbso60s/image/upload/v1748938152/Tuomas_2_hb6q3z.png", alt: "Tuomas" },
   { originalSrc: "https://res.cloudinary.com/dscbso60s/image/upload/v1748938168/Widz_2_rg4qb9.png", alt: "Widz" },
 ].map(image => ({
   ...image,
-  src: constructCloudinaryUrl(image.originalSrc) // Create the transformed URL
+  src: constructCloudinaryUrl(image.originalSrc)
 }));
 
 
@@ -79,10 +75,18 @@ const shuffleArray = (array) => {
   return newArray;
 };
 
-const Home = () => {
-  const [shuffledImages, setShuffledImages] = useState(() =>
-    masterImagesList.length > 0 ? shuffleArray(masterImagesList) : []
-  );
+// --- UPDATED: Added 'fixtures' prop here ---
+const Home = ({ fixtures = [] }) => {
+  // 1. Initialize with the MASTER list (Deterministic/Predictable)
+  // This ensures the Server and Client match perfectly on the first load.
+  const [shuffledImages, setShuffledImages] = useState(masterImagesList);
+
+  // 2. Shuffle the images ONLY on the client, immediately after mounting
+  useEffect(() => {
+    if (masterImagesList.length > 0) {
+      setShuffledImages(shuffleArray(masterImagesList));
+    }
+  }, []);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -137,12 +141,10 @@ const Home = () => {
         <div className="carousel">
           {shuffledImages.map((image, index) => (
             <div
-              key={image.src} // Cloudinary URLs will be unique and stable
+              key={image.src}
               className={`carousel-item ${index === currentIndex ? "active" : ""}`}
             >
               <Suspense fallback={<div className="image-placeholder">Loading...</div>}>
-                {/* Simplified: Pass the transformed Cloudinary URL directly to LazyImage */}
-                {/* The f_auto in the URL will handle WebP/PNG format serving */}
                 <LazyImage src={image.src} alt={image.alt} />
               </Suspense>
             </div>
@@ -156,9 +158,33 @@ const Home = () => {
             We are on the hunt for new people and players of <br />
             all sizes to join our club - No experience needed!
           </p>
-          <Link to="/media-recruitment#recruitment" className="about-us-btn">
+          <Link href="/media-recruitment#recruitment" className="about-us-btn">
             MORE ABOUT THIS
           </Link>
+
+          {/* --- NEW SECTION: Display Fixtures from CMS --- */}
+          {fixtures && fixtures.length > 0 && (
+            <div style={{ marginTop: '40px', background: 'rgba(0,0,0,0.6)', padding: '20px', borderRadius: '10px' }}>
+              <h2 style={{ color: 'white', marginBottom: '20px', fontSize: '1.5rem' }}>Upcoming Fixtures</h2>
+              <div style={{ display: 'grid', gap: '15px' }}>
+                {fixtures.map(match => (
+                  <div key={match._id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255,255,255,0.3)', paddingBottom: '10px' }}>
+                     <div style={{ textAlign: 'left' }}>
+                        <span style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#4caf50' }}>Shamrocks</span>
+                        <span style={{ margin: '0 10px', color: 'white' }}>vs</span>
+                        <span style={{ fontSize: '1.2rem', fontWeight: 'bold', color: 'white' }}>{match.opponent}</span>
+                     </div>
+                     <div style={{ textAlign: 'right' }}>
+                        <div style={{ color: '#ddd' }}>{new Date(match.date).toDateString()}</div>
+                        {match.score && <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#fbbf24' }}>{match.score}</div>}
+                     </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          {/* --- END NEW SECTION --- */}
+
         </div>
       </div>
     </section>
