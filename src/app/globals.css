@@ -1,26 +1,63 @@
-@import "tailwindcss";
+/* src/app/globals.css */
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* 1. Import the Font */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+/* 2. Global Reset */
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* FIX: Use min-height instead of height to prevent gaps on long pages */
+html, body {
+  min-height: 100%; 
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* 3. The Body Styling (Background Image) */
+body {
+  font-family: 'Oswald', sans-serif;
+  /* Using your Cloudinary URL directly */
+  background: url('https://res.cloudinary.com/dscbso60s/image/upload/v1751478511/Team_2023_Tampere_3_ndihs2.png') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  color: white;
+  background-color: #000;
+  /* FIX: Ensure no overflow creates horizontal scrollbars */
+  overflow-x: hidden;
+}
+
+/* 4. The Main Wrapper */
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* 5. The "Black Box" Container */
+.content-container {
+  flex: 1;
+  background-color: black;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Only on large screens, make it 70% width and centered */
+@media (min-width: 1025px) {
+  .content-container {
+    width: 70%;
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* 6. Variables */
+:root {
+  --footer-banner-height: 70px;
+  --sponsor-carousel-banner-height: 70px;
 }
