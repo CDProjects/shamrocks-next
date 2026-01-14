@@ -28,7 +28,7 @@ const Team = ({ players = [] }) => {
       
       <h2>2025 Team Roster</h2>
       
-      <div className="roster content-container">
+      <div className="roster">
         
         {/* FORWARDS COLUMN */}
         <div className="forwards">
