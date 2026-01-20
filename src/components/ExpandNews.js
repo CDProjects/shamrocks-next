@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import { ChevronRight, ChevronDown } from "lucide-react";
-import { Helmet } from "react-helmet";
 import ShareButtons from "./ShareButtons"; // Import the component
 import "./ExpandNews.css";
 
@@ -89,15 +88,7 @@ const ExpandableNewsArticle = ({
     <div
       className={`expandable-article ${isExpanded ? "expanded" : ""}`}
       ref={containerRef}
-    >
-      <Helmet>
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={content.substring(0, 200) + '...'} />
-        <meta property="og:image" content={images[0]?.src} />
-        <meta property="og:url" content={articleUrl} />
-        <meta property="og:type" content="article" />
-      </Helmet>
-      
+    > 
       <div className="article-header" onClick={toggleExpand}>
         <div className="title-section">
           <div className="icon">

@@ -95,7 +95,12 @@ const News = ({ cmsArticles = [] }) => {
                     content={article.content}
                     language="fi"
                     // Map Sanity image to the format your component expects
-                    images={article.mainImage ? [{ src: article.mainImage, alt: article.title }] : []}
+                    images={[
+                              // 1. Add the Main Image first (if it exists)
+                              ...(article.mainImage ? [{ src: article.mainImage, alt: article.title }] : []),
+                              // 2. Add all Additional Images (if they exist)
+                              ...(article.additionalImages ? article.additionalImages.map(img => ({ src: img, alt: "Gallery" })) : [])
+                            ]}
                     isExpanded={expandedArticleId === article.slug}
                     onExpand={() => handleExpandArticle(article.slug)}
                   />
