@@ -1,85 +1,64 @@
-// src/Components/News/News.js
+"use client";
+
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { useSearchParams, useRouter } from "next/navigation"; // Next.js hooks
 import "./News.css";
-import FacebookPageWrapper from "./FacebookPageWrapper"; // Ensure path is correct
-import ExpandableNewsArticle from "./ExpandNews"; // Ensure path is correct
-import { articleData } from "./ArticleData"; // Ensure path is correct
-import ErrorBoundary from "./ErrorBoundary"; // Ensure path is correct
+// NOTE: Ensure these files exist in src/components/
+import FacebookPageWrapper from "./FacebookPageWrapper"; 
+import ExpandableNewsArticle from "./ExpandNews"; 
 
 const semiFinalImage = "https://res.cloudinary.com/dscbso60s/image/upload/v1751481998/Sponsors_2025_zb9onz.jpg";
 
-const News = () => {
+const News = ({ cmsArticles = [] }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [containerWidth, setContainerWidth] = useState(500);
   const [expandedArticleId, setExpandedArticleId] = useState(null);
-  const location = useLocation();
-  const navigate = useNavigate();
+  
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const articleIdFromUrl = searchParams.get("article");
-    setExpandedArticleId(articleIdFromUrl || null);
+    // Check URL for expanded article
+    const articleSlugFromUrl = searchParams.get("article");
+    setExpandedArticleId(articleSlugFromUrl || null);
 
-    // Initial width calculation
+    // Initial width calculation for Facebook Plugin
     const calculateWidth = () => {
-      // 500 is the max width supported by the FB plugin
       const w = Math.min(500, window.innerWidth > 40 ? window.innerWidth - 40 : 500);
       setContainerWidth(w);
     };
 
-    calculateWidth(); // Run immediately
-
+    calculateWidth();
+    
+    // Simulate loading delay for effect (optional)
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
+    }, 1000);
 
-    const handleResize = () => {
-      calculateWidth();
-    };
-    
+    const handleResize = () => calculateWidth();
     window.addEventListener("resize", handleResize);
 
     return () => {
       clearTimeout(timer);
       window.removeEventListener("resize", handleResize);
     };
-  }, [location]);
+  }, [searchParams]);
 
-  // REMOVED: The generic useEffect that called window.FB.XFBML.parse()
-  // The FacebookPageWrapper now handles this internally when it mounts.
-
-  const handleExpandArticle = (articleIdToExpand) => {
-    const newExpandedId = expandedArticleId === articleIdToExpand ? null : articleIdToExpand;
+  const handleExpandArticle = (slug) => {
+    const newExpandedId = expandedArticleId === slug ? null : slug;
     setExpandedArticleId(newExpandedId);
 
+    // Update URL without reloading page
     if (newExpandedId) {
-      navigate(`/news?article=${newExpandedId}`, { replace: true });
+      router.push(`/news?article=${newExpandedId}`, { scroll: false });
     } else {
-      navigate("/news", { replace: true });
+      router.push("/news", { scroll: false });
     }
-  };
-
-  const getMetaTags = () => {
-    return (
-      <ErrorBoundary>
-        <Helmet>
-          <title>Shamrocks News</title>
-          <meta property="og:title" content="Old Town Shamrocks - News" />
-          <meta property="og:description" content="Latest news, updates, and articles from Old Town Shamrocks Rugby Club." />
-          <meta property="og:url" content={`${window.location.origin}/#/news`} />
-          <meta property="og:type" content="website" />
-          <meta property="og:image" content={`${window.location.origin}/images/default-shamrocks-news-og-image.jpg`} />
-        </Helmet>
-      </ErrorBoundary>
-    );
   };
 
   return (
     <div className="news-section">
-      {getMetaTags()}
-      <h1>NEWS</h1>
+      <h1 style={{ color: 'white', fontSize: '2.5rem', marginTop: '20px' }}>NEWS</h1>
 
       {isLoading ? (
         <div className="custom-loader">
@@ -92,6 +71,7 @@ const News = () => {
             <img src={semiFinalImage} alt="Shamrocks Rugby Action" className="semi-final-image" />
           </div>
 
+          {/* Facebook Plugin */}
           <div className="fb-page-container">
             <FacebookPageWrapper
               fbPageUrl="https://www.facebook.com/OldTownShamrocks/"
@@ -101,20 +81,23 @@ const News = () => {
             />
           </div>
 
+          {/* CMS Articles List */}
           <div className="articles-container" style={{ maxWidth: '800px', margin: '32px auto', backgroundColor: '#000', padding: '16px', borderRadius: '8px' }}>
             <h2 style={{ color: '#ffffff', marginBottom: '24px', textAlign: 'center', fontSize: '2em' }}>ARTICLES</h2>
-            {articleData && articleData.length > 0 ? (
-              articleData.map(article => (
-                <div key={article.id} className="expandable-article-item-wrapper">
+            
+            {cmsArticles && cmsArticles.length > 0 ? (
+              cmsArticles.map(article => (
+                <div key={article._id} className="expandable-article-item-wrapper">
                   <ExpandableNewsArticle
-                    id={article.id}
+                    id={article.slug} // Use slug as ID
                     title={article.title}
                     date={article.date}
                     content={article.content}
                     language="fi"
-                    images={article.images}
-                    isExpanded={expandedArticleId === article.id}
-                    onExpand={() => handleExpandArticle(article.id)}
+                    // Map Sanity image to the format your component expects
+                    images={article.mainImage ? [{ src: article.mainImage, alt: article.title }] : []}
+                    isExpanded={expandedArticleId === article.slug}
+                    onExpand={() => handleExpandArticle(article.slug)}
                   />
                 </div>
               ))

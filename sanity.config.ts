@@ -4,6 +4,7 @@ import { visionTool } from '@sanity/vision'
 // Import the schema type
 import fixture from './src/sanity/schemas/fixture'
 import player from './src/sanity/schemas/player'
+import news from './src/sanity/schemas/news'
 
 export default defineConfig({
   name: 'default',
@@ -18,6 +19,6 @@ export default defineConfig({
 
   schema: {
     // We list our content types here
-    types: [fixture, player],
+    types: [fixture, player, news],
   },
 })
