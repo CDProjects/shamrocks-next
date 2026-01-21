@@ -5,6 +5,11 @@ import { visionTool } from '@sanity/vision'
 import fixture from './src/sanity/schemas/fixture'
 import player from './src/sanity/schemas/player'
 import news from './src/sanity/schemas/news'
+import trainingPage from './src/sanity/schemas/trainingPage'
+import juniorsPage from './src/sanity/schemas/juniorsPage'
+import touchPage from './src/sanity/schemas/touchPage'
+import contactPage from './src/sanity/schemas/contactPage'
+import medRecPage from './src/sanity/schemas/medRecPage'
 
 export default defineConfig({
   name: 'default',
@@ -19,6 +24,15 @@ export default defineConfig({
 
   schema: {
     // We list our content types here
-    types: [fixture, player, news],
+    types: [
+      fixture, 
+      player, 
+      news,
+      trainingPage, 
+      juniorsPage, 
+      touchPage, 
+      contactPage, 
+      medRecPage
+    ]
   },
 })
