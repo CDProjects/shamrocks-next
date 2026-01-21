@@ -1,17 +1,12 @@
 "use client";
 import React from "react";
-import { TileLayer, Marker, Popup } from "react-leaflet";
-import LazyMap from "./LazyMap"; 
-import "leaflet/dist/leaflet.css";
-import L from "leaflet";
+import dynamic from "next/dynamic"; // Import dynamic
 import "./Training.css";
 
-// Fix for default marker icon
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
-  iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
-  shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
+// 1. Import the map dynamically and turn OFF server-side rendering (ssr: false)
+const LocationMap = dynamic(() => import("./LocationMap"), {
+  ssr: false,
+  loading: () => <div style={{ height: "300px", background: "#f0f0f0", display: "flex", alignItems: "center", justifyContent: "center" }}>Loading Map...</div>
 });
 
 const Training = ({ data }) => {
@@ -30,25 +25,42 @@ const Training = ({ data }) => {
         <div className="training-item">
           <h3>Juniors & Touch</h3>
           <p style={{whiteSpace: 'pre-line'}}>{data.juniorsSchedule}</p>
-          <LazyMap center={kanteletaloPosition} zoom={15} scrollWheelZoom={false} className="map">
-            <TileLayer attribution='&copy; OpenStreetMap' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-            <Marker position={kanteletaloPosition}><Popup>Kanteletalo A-Hall</Popup></Marker>
-          </LazyMap>
-          <a href={data.juniorsMapLink} target="_blank" rel="noopener noreferrer" className="map-link">View Kanteletalo on Google Maps</a>
+          
+          {/* Map Wrapper */}
+          <div className="map" style={{ height: "300px", width: "100%", marginBottom: "10px" }}>
+            <LocationMap 
+                center={kanteletaloPosition} 
+                zoom={15} 
+                popupText="Kanteletalo A-Hall" 
+            />
+          </div>
+
+          <a href={data.juniorsMapLink} target="_blank" rel="noopener noreferrer" className="map-link">
+            View Kanteletalo on Google Maps
+          </a>
         </div>
 
         {/* Mens Section */}
         <div className="training-item">
           <h3>Mens</h3>
           <p style={{whiteSpace: 'pre-line'}}>{data.mensSchedule}</p>
-          <LazyMap center={tolkkinenPosition} zoom={13} scrollWheelZoom={false} className="map">
-            <TileLayer attribution='&copy; OpenStreetMap' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-            <Marker position={tolkkinenPosition}><Popup>Uusimaa Areena</Popup></Marker>
-          </LazyMap>
-          <a href={data.mensMapLink} target="_blank" rel="noopener noreferrer" className="map-link">View Uusimaa Areena on Google Maps</a>
+          
+          {/* Map Wrapper */}
+          <div className="map" style={{ height: "300px", width: "100%", marginBottom: "10px" }}>
+            <LocationMap 
+                center={tolkkinenPosition} 
+                zoom={13} 
+                popupText="Uusimaa Areena" 
+            />
+          </div>
+
+          <a href={data.mensMapLink} target="_blank" rel="noopener noreferrer" className="map-link">
+            View Uusimaa Areena on Google Maps
+          </a>
         </div>
       </div>
     </section>
   );
 };
+
 export default Training;
