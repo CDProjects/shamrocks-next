@@ -6,27 +6,57 @@ export default defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'juniorsSchedule',
-      title: 'Juniors & Touch Schedule',
-      type: 'text',
-      rows: 3,
-      description: 'e.g. THURSDAY 01.01.26 to 30.04.2026...'
+      name: 'trainingSessions',
+      title: 'Training Sessions',
+      type: 'array', // This allows you to add as many as you want
+      of: [
+        {
+          type: 'object',
+          title: 'Session',
+          fields: [
+            defineField({
+              name: 'title',
+              title: 'Group Title',
+              type: 'string',
+              description: 'e.g. Juniors & Touch, Mens, Beginners',
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'schedule',
+              title: 'Schedule Details',
+              type: 'text',
+              rows: 4,
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'locationName',
+              title: 'Location Name',
+              type: 'string',
+              description: 'e.g. Kanteletalo A-Hall',
+            }),
+            defineField({
+              name: 'googleMapsLink',
+              title: 'Google Maps Link (For Button)',
+              type: 'url',
+            }),
+            // MAP COORDINATES
+            defineField({
+              name: 'latitude',
+              title: 'Map Latitude',
+              type: 'number',
+              description: 'Right-click the location on Google Maps to see this (e.g. 60.3882)',
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'longitude',
+              title: 'Map Longitude',
+              type: 'number',
+              description: 'Right-click the location on Google Maps to see this (e.g. 25.6994)',
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+        },
+      ],
     }),
-    defineField({
-      name: 'juniorsMapLink',
-      title: 'Juniors Google Maps Link',
-      type: 'url'
-    }),
-    defineField({
-      name: 'mensSchedule',
-      title: 'Mens Schedule',
-      type: 'text',
-      rows: 5,
-    }),
-    defineField({
-      name: 'mensMapLink',
-      title: 'Mens Google Maps Link',
-      type: 'url'
-    }),
-  ]
+  ],
 })
