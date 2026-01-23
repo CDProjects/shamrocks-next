@@ -1,23 +1,27 @@
 import { client } from "../../sanity/client";
 import Team from "../../components/Team";
 
-// Force the page to re-fetch data on every request so updates are instant
 export const dynamic = "force-dynamic";
 
 export default async function TeamPage() {
-  // Fetch all players sorted alphabetically by name
+  // 1. Fetch the Page Settings (Photo + Title)
+  const pageData = await client.fetch(`*[_type == "teamPage"][0]{
+    seasonTitle,
+    "teamPhoto": teamPhoto.asset->url
+  }`);
+
+  // 2. Fetch the Players List
   const players = await client.fetch(`*[_type == "player"] | order(name asc) {
     _id,
     name,
     category,
-    role,
-    position, // Fetching for future use
-    "imageUrl": image.asset->url // Fetching for future use
+    role
   }`);
 
   return (
     <main>
-      <Team players={players} />
+      {/* Pass both pieces of data to the component */}
+      <Team players={players} pageData={pageData} />
     </main>
   );
 }

@@ -3,9 +3,7 @@
 import React from 'react';
 import './Team.css';
 
-const teamPicture = "https://res.cloudinary.com/dscbso60s/image/upload/v1751479070/Team_2025_kneel_nvbb70.jpg";
-
-const Team = ({ players = [] }) => {
+const Team = ({ players = [], pageData }) => {
   
   // Filter the data coming from the CMS
   const forwards = players.filter(p => p.category === 'Forward');
@@ -17,16 +15,19 @@ const Team = ({ players = [] }) => {
       <div id="team-marker"></div>
       <h1 className="section-title">TEAM</h1>
       
-      <picture>
-        <source srcSet={teamPicture.replace('.jpg', '.webp')} type="image/webp" />
-        <img
-          src={teamPicture}
-          alt="Team"
-          className="team-picture"
-        />
-      </picture>
+      {/* Dynamic Team Picture */}
+      {pageData && pageData.teamPhoto && (
+        <picture>
+          <img
+            src={pageData.teamPhoto}
+            alt="Team"
+            className="team-picture"
+          />
+        </picture>
+      )}
       
-      <h2>2025 Team Roster</h2>
+      {/* Dynamic Title */}
+      <h2>{pageData ? pageData.seasonTitle : "Team Roster"}</h2>
       
       <div className="roster">
         

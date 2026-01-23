@@ -4,6 +4,7 @@ import { visionTool } from '@sanity/vision'
 // Import the schema type
 import fixture from './src/sanity/schemas/fixture'
 import player from './src/sanity/schemas/player'
+import teamPage from './src/sanity/schemas/teamPage'
 import news from './src/sanity/schemas/news'
 import trainingPage from './src/sanity/schemas/trainingPage'
 import juniorsPage from './src/sanity/schemas/juniorsPage'
@@ -28,6 +29,7 @@ export default defineConfig({
     types: [
       fixture, 
       player, 
+      teamPage,
       news,
       trainingPage, 
       juniorsPage, 
