@@ -6,6 +6,13 @@ export const metadata = {
   description: "Porvoo Rugby Club",
 };
 
+// This ensures mobile phones scale the site correctly
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -14,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {/* We pass the page content into our smart ClientLayout */}
+        {/* Pass the page content into our smart ClientLayout */}
         <ClientLayout>
           {children}
         </ClientLayout>
