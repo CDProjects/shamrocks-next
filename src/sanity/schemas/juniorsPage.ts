@@ -21,5 +21,13 @@ export default defineType({
     }),
     defineField({ name: 'bottomImage1', title: 'Bottom Left Image', type: 'image' }),
     defineField({ name: 'bottomImage2', title: 'Bottom Right Image', type: 'image' }),
-  ]
+  ],
+  preview: {
+    prepare() {
+      return {
+        title: 'Juniors Page Content',
+        subtitle: 'Edit images and text here'
+      }
+    }
+  }
 })
