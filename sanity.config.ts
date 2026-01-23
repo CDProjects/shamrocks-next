@@ -8,6 +8,7 @@ import news from './src/sanity/schemas/news'
 import trainingPage from './src/sanity/schemas/trainingPage'
 import juniorsPage from './src/sanity/schemas/juniorsPage'
 import touchPage from './src/sanity/schemas/touchPage'
+import fixturesPage from './src/sanity/schemas/fixturesPage'
 import contactPage from './src/sanity/schemas/contactPage'
 import medRecPage from './src/sanity/schemas/medRecPage'
 
@@ -31,6 +32,7 @@ export default defineConfig({
       trainingPage, 
       juniorsPage, 
       touchPage, 
+      fixturesPage,
       contactPage, 
       medRecPage
     ]

@@ -1,111 +1,70 @@
-import React, { useEffect } from 'react';
-import ErrorBoundary from './ErrorBoundary';
-import './Fixtures.css';
+"use client";
+import React from "react";
 
-const Fixtures = () => {
-   //const [competitionTable, setCompetitionTable] = useState('');
-   //const [isLoading, setIsLoading] = useState(true);
-   //const [error, setError] = useState(null);
-
-  useEffect(() => {
-    fetch('/competitionTable.html')
-      .then(response => response.text())
-      .then(data => {
-        // Parse the HTML string
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(data, 'text/html');
-
-        // Modify the structure of the second column
-        const cells = doc.querySelectorAll('td:nth-child(2)');
-        cells.forEach(cell => {
-          const img = cell.querySelector('img');
-          const text = cell.textContent.trim();
-          cell.innerHTML = `
-            <div class="team-info">
-              ${img ? img.outerHTML : ''}
-              <span>${text}</span>
-            </div>
-          `;
-        });
-
-        // Convert back to string
-         //setCompetitionTable(doc.body.innerHTML);
-         //setIsLoading(false);
-      })
-      .catch(err => {
-         //setError(err);
-         //setIsLoading(false);
-      });
-  }, []);
-
-  const fixturesData = [
-    { date: "24.5", teams: "SHAMROCKS - EAGLES",    score: "43 - 0", time: "klo 13:00" },
-    { date: "14.6", teams: "SHAMROCKS - KALEV",    score: "24 - 0 (F)",  time: "klo 13:00" },
-    { date: "28.6", teams: "SHAMROCKS - TAMPERE",  score: "45 - 10",  time: "klo 12:00" },
-    { date: "5.7",  teams: "EAGLES - SHAMROCKS",    score: "16 - 15",  time: "klo 13:00" },
-    { date: "12.7", teams: "SHAMROCKS - WARRIORS", score: "10 - 32",  time: "klo 13:00" },
-    { date: "26.7", teams: "KALEV - SHAMROCKS",    score: "33 - 22",  time: "klo 13:00" },
-    { date: "9.8",  teams: "HELSINKI - SHAMROCKS", score: "50 - 0",  time: "klo 13:00" },
-    { date: "16.8", teams: "TAMPERE - SHAMROCKS",  score: "14 - 5",  time: "klo 13:00" },
-    { date: "30.8", teams: "WARRIORS - SHAMROCKS", score: "24 - 3",  time: "klo 13:00" },
-    { date: "6.9",  teams: "SHAMROCKS - HELSINKI", score: "12 - 38",  time: "klo 13:00" },
-    { date: "TBA",  teams: "SEMI-FINAL",         score: "0 - 0",  time: "N/A"      },
-    { date: "TBA",  teams: "GRAND FINAL",        score: "0 - 0",  time: "N/A"      },
-  ];
+const Fixtures = ({ data }) => {
+  if (!data) return null;
 
   return (
-    <ErrorBoundary>
-      <section id="fixtures-section" className="fixtures-section">
-        {/* … your header, loading/status messages, etc. … */}
+    <section style={{ padding: "40px 20px", color: "white", textAlign: "center", fontFamily: "Oswald, sans-serif" }}>
+      
+      {/* 1. The Flyer Image */}
+      {data.flyer && (
+        <img 
+          src={data.flyer} 
+          alt="Season Flyer" 
+          style={{ maxWidth: "800px", width: "100%", margin: "0 auto 40px", display: "block" }} 
+        />
+      )}
 
-        {/*
-          <div id="fixtures-marker"></div>
-          <div className="content-container">
-            <h1 className="section-title">RESULTS & FIXTURES</h1>
-          </div>
-          
-          {isLoading && <p>Loading competition table...</p>}
-          {error && <p>Error loading competition table: {error.message}</p>}
-          {competitionTable && (
-            <div className="competition-table-wrapper">
-              <div 
-                className="competition-table" 
-                dangerouslySetInnerHTML={{ __html: competitionTable }} 
-              />
-            </div>
-          )}
-        */}
+      {/* 2. Title */}
+      <h2 style={{ fontSize: "2rem", marginBottom: "10px", color: "white" }}>{data.seasonTitle}</h2>
+      <h3 style={{ fontSize: "1.5rem", marginBottom: "30px", color: "#ddd" }}>OTS FIXTURES & RESULTS</h3>
 
-        <picture>
-          <img
-            src="https://res.cloudinary.com/dscbso60s/image/upload/v1762801666/Rugby_Kurssi_2025_rhv2dn.jpg"
-            alt="Juniors and Beginners Rugby Course Poster"
-            className="fixtures-picture"
-          />
-        </picture>
+      {/* 3. The Match Table */}
+      <div style={{ maxWidth: "900px", margin: "0 auto", fontSize: "1.1rem" }}>
         
-        <div className="content-container">
-          <h2 className="fixtures-subtitle">2025 Championship</h2>
-          <h3 className="fixtures-subtitle">OTS FIXTURES &amp; RESULTS</h3>
-          
-          {fixturesData.map((fixture, index) => (
-            <p key={index} className="fixtures-text">
-              <span className="date">{fixture.date}</span>
-
-              {/* ← Inserted kickoff‐time span here */}
-              <span className="time">{fixture.time}</span>
-
-              <span className="teams">{fixture.teams}</span>
-              <span className="score">
-                <b>{fixture.score}</b>
-                <br />
+        {data.matches && data.matches.map((match, index) => (
+          <div 
+            key={index} 
+            style={{ 
+              display: "grid", 
+              gridTemplateColumns: "1fr 1fr 3fr 1fr", 
+              gap: "10px", 
+              padding: "10px 0", 
+              borderBottom: "1px solid #333",
+              textAlign: "left",
+              alignItems: "center"
+            }}
+          >
+            {/* Date */}
+            <div style={{ color: "#999" }}>{match.date}</div>
+            
+            {/* Time */}
+            <div style={{ fontWeight: "bold" }}>{match.time}</div>
+            
+            {/* Teams */}
+            <div style={{ fontWeight: "bold", textTransform: "uppercase" }}>
+              <span style={{ color: match.homeTeam?.toLowerCase().includes('shamrocks') ? "#2e8b57" : "white" }}>
+                {match.homeTeam}
               </span>
-            </p>
-          ))}
-        </div>
-      </section>
-    </ErrorBoundary>
+              <span style={{ margin: "0 10px", color: "#666" }}>-</span>
+              <span style={{ color: match.awayTeam?.toLowerCase().includes('shamrocks') ? "#2e8b57" : "white" }}>
+                {match.awayTeam}
+              </span>
+            </div>
+
+            {/* Score */}
+            <div style={{ textAlign: "right", fontWeight: "bold", fontSize: "1.2rem" }}>
+              {match.score || "-"} <span style={{fontSize: "0.8rem"}}>{match.note}</span>
+            </div>
+          </div>
+        ))}
+
+        {(!data.matches || data.matches.length === 0) && <p>No fixtures found.</p>}
+
+      </div>
+    </section>
   );
 };
 
-export default React.memo(Fixtures);
+export default Fixtures;
