@@ -8,7 +8,7 @@ export default defineType({
     defineField({
       name: 'trainingSessions',
       title: 'Training Sessions',
-      type: 'array', // This allows you to add as many as you want
+      type: 'array',
       of: [
         {
           type: 'object',
@@ -39,24 +39,37 @@ export default defineType({
               title: 'Google Maps Link (For Button)',
               type: 'url',
             }),
-            // MAP COORDINATES
             defineField({
               name: 'latitude',
               title: 'Map Latitude',
               type: 'number',
-              description: 'Right-click the location on Google Maps to see this (e.g. 60.3882)',
               validation: (Rule) => Rule.required(),
             }),
             defineField({
               name: 'longitude',
               title: 'Map Longitude',
               type: 'number',
-              description: 'Right-click the location on Google Maps to see this (e.g. 25.6994)',
               validation: (Rule) => Rule.required(),
             }),
           ],
+          // FIX 1: Make the list items look nice
+          preview: {
+            select: {
+              title: 'title',
+              subtitle: 'locationName'
+            }
+          }
         },
       ],
     }),
   ],
+  // FIX 2: Make the main document look nice in the list
+  preview: {
+    prepare() {
+      return {
+        title: 'Training Page Content',
+        subtitle: 'Edit schedules and locations here'
+      }
+    }
+  }
 })
