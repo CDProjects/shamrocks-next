@@ -38,6 +38,17 @@ const Navbar = () => {
 
   return (
     <>
+      {/* THE SPACER: Pushes the page content down so it doesn't hide behind the fixed navbar */}
+      <div 
+        className="navbar-spacer" 
+        style={{ 
+          height: isMediumDevice ? '54px' : '60px', /* Matches desktop and mobile navbar heights */
+          width: '100%',
+          display: 'block',
+          flexShrink: 0
+        }} 
+      ></div>
+
       {!isMediumDevice && (
         <div className="nav-bar">
           <div className="logo-title">
@@ -82,11 +93,22 @@ const Navbar = () => {
           </div>
           
           {pathname === '/' && (
-            <div className="home-club-medium">
+            <div 
+              className="home-club-medium"
+              style={{ left: '6.3%', top: '150px' }} // Keep your perfect positioning here
+            >
               <img src={logo} alt="Old Town Shamrocks Logo" className="home-image-medium" />
-              <div className="title-container">
-                <h1>Old Town Shamrocks</h1>
-                <h2 className="subtitle">Porvoo Rugby Club</h2>
+              <div className="title-container" style={{ display: 'flex', flexDirection: 'column', marginLeft: '15px' }}>
+                
+                {/* ULTIMATE OVERRIDE FOR H1 */}
+                <h1 style={{ fontSize: '35px', margin: '0', lineHeight: '1', color: 'white' }}>
+                  Old Town Shamrocks
+                </h1>
+                
+                {/* ULTIMATE OVERRIDE FOR H2 */}
+                <h2 className="subtitle" style={{ fontSize: '26px', margin: '0', color: '#ddd', fontWeight: 'normal' }}>
+                  Porvoo Rugby Club
+                </h2>
               </div>
             </div>
           )}
