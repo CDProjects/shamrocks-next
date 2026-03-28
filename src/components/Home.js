@@ -164,19 +164,19 @@ const Home = ({ fixtures = [] }) => {
 
           {/* --- NEW SECTION: Display Fixtures from CMS --- */}
           {fixtures && fixtures.length > 0 && (
-            <div style={{ marginTop: '40px', background: 'rgba(0,0,0,0.6)', padding: '20px', borderRadius: '10px' }}>
-              <h2 style={{ color: 'white', marginBottom: '20px', fontSize: '1.5rem' }}>Upcoming Fixtures</h2>
-              <div style={{ display: 'grid', gap: '15px' }}>
+            <div className="home-fixtures-widget">
+              <h2>Upcoming Fixtures</h2>
+              <div className="home-fixtures-list">
                 {fixtures.map(match => (
-                  <div key={match._id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255,255,255,0.3)', paddingBottom: '10px' }}>
-                     <div style={{ textAlign: 'left' }}>
-                        <span style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#4caf50' }}>Shamrocks</span>
-                        <span style={{ margin: '0 10px', color: 'white' }}>vs</span>
-                        <span style={{ fontSize: '1.2rem', fontWeight: 'bold', color: 'white' }}>{match.opponent}</span>
+                  <div key={match._id} className="home-fixture-row">
+                     <div className="home-fixture-teams">
+                        <span className="team-home">Shamrocks</span>
+                        <span className="team-vs">vs</span>
+                        <span className="team-away">{match.opponent}</span>
                      </div>
-                     <div style={{ textAlign: 'right' }}>
-                        <div style={{ color: '#ddd' }}>{new Date(match.date).toDateString()}</div>
-                        {match.score && <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#fbbf24' }}>{match.score}</div>}
+                     <div className="home-fixture-details">
+                        {match.date && <div className="fixture-date">{new Date(match.date).toDateString()}</div>}
+                        {match.score && <div className="fixture-score">{match.score}</div>}
                      </div>
                   </div>
                 ))}

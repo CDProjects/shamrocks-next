@@ -118,3 +118,111 @@ body.home-page .content-container {
   .carousel-item img { object-position: center 25%; }
   .carousel-container { left: 40%; width: 55%; height: 90%; top: 1%; }
 }
+
+/* ---------------------------------------------------
+   HOME PAGE FIXTURES WIDGET (Scoreboard)
+--------------------------------------------------- */
+.home-fixtures-widget {
+  margin-top: 40px;
+  background: rgba(0, 0, 0, 0.75); /* Darker background so text pops over the image */
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.home-fixtures-widget h2 {
+  color: white;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.home-fixtures-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.home-fixture-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 12px;
+}
+
+/* Remove border from the last item */
+.home-fixture-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.home-fixture-teams {
+  text-align: left;
+  font-size: 1.2rem;
+}
+
+.team-home { font-weight: bold; color: #4caf50; }
+.team-vs { margin: 0 10px; color: #aaa; font-size: 1rem; }
+.team-away { font-weight: bold; color: white; }
+
+.home-fixture-details {
+  text-align: right;
+}
+
+.fixture-date { color: #ddd; font-size: 0.9rem; margin-bottom: 4px; }
+.fixture-score { font-size: 1.2rem; font-weight: bold; color: #fbbf24; }
+
+/* ---------------------------------------------------
+   MOBILE RESPONSIVENESS FOR FIXTURES WIDGET
+--------------------------------------------------- */
+@media (max-width: 768px) {
+  .home-fixtures-widget {
+    /* Much tighter box */
+    padding: 10px 15px; 
+    margin-top: 20px;
+    width: 90%; /* Gives it a little breathing room from screen edges */
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .home-fixtures-widget h2 {
+    font-size: 1.1rem; /* Much smaller title */
+    margin-bottom: 10px;
+  }
+
+  .home-fixture-row {
+    /* Keep them on one line, don't stack them */
+    flex-direction: row; 
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 8px;
+    gap: 5px;
+  }
+
+  .home-fixture-teams {
+    font-size: 0.85rem; /* Tiny team names */
+    text-align: left;
+    white-space: nowrap; /* Stops names from wrapping awkwardly */
+  }
+
+  .team-vs {
+    margin: 0 4px;
+    font-size: 0.75rem;
+  }
+
+  .home-fixture-details {
+    text-align: right;
+  }
+
+  .fixture-date {
+    font-size: 0.65rem; /* Tiny date */
+    margin-bottom: 2px;
+  }
+
+  .fixture-score {
+    font-size: 0.95rem; /* Proportionally smaller score */
+  }
+}
