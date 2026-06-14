@@ -1,4 +1,4 @@
-/* src/Components/Home.css */
+/* src/components/Home.css */
 
 /* If body.home-page { overflow: hidden; } exists, REMOVE IT.
    Page needs to scroll to show content below .home-section. */
@@ -12,6 +12,8 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  /* FIX: Ensure no invisible padding is pushing the top down */
+  padding-top: 0 !important; 
 }
 
 /* Override content-container height specifically for home page */
@@ -97,9 +99,7 @@ body.home-page .content-container {
     top:   40%       !important;  /* how far down on desktop */
     left:  6.5%       !important;  /* match your existing left:19% */
   }
-
 }
-
 
 @media (min-width: 1200px) {
   .carousel-container { left: 20%; width: 85%; height: calc(100% - 30px); top: -3%; }
@@ -176,14 +176,26 @@ body.home-page .content-container {
 .fixture-score { font-size: 1.2rem; font-weight: bold; color: #fbbf24; }
 
 /* ---------------------------------------------------
-   MOBILE RESPONSIVENESS FOR FIXTURES WIDGET
+   MOBILE RESPONSIVENESS (Fixtures & Image Gaps)
 --------------------------------------------------- */
 @media (max-width: 768px) {
+  
+  /* GAP FIX: Pulling the carousel image UP closer to the Navbar */
+  .carousel-container {
+    /* A negative margin pulls the image UP. 
+       If -30px isn't enough to reach the navbar, try -40px or -50px! */
+    margin-top: -30px; 
+  }
+
   .home-fixtures-widget {
-    /* Much tighter box */
     padding: 10px 15px; 
-    margin-top: 20px;
-    width: 90%; /* Gives it a little breathing room from screen edges */
+    margin-top: 30px; 
+    
+    /* FIX 2: Reduce this from 40px to 10px. 
+       This drops the entire widget (and the text above it) closer to the bottom! */
+    margin-bottom: 10px; 
+    
+    width: 90%; 
     margin-left: auto;
     margin-right: auto;
   }

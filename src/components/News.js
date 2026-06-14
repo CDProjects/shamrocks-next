@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useSearchParams, useRouter } from "next/navigation"; // Next.js hooks
+import { useSearchParams, useRouter } from "next/navigation"; 
 import "./News.css";
-// NOTE: Ensure these files exist in src/components/
 import FacebookPageWrapper from "./FacebookPageWrapper"; 
 import ExpandableNewsArticle from "./ExpandNews"; 
 
-const semiFinalImage = "https://res.cloudinary.com/dscbso60s/image/upload/v1751481998/Sponsors_2025_zb9onz.jpg";
+// FIX: We removed the hardcoded 'semiFinalImage' from here.
 
-const News = ({ cmsArticles = [] }) => {
+// FIX: Ensure 'pageData' is accepted as a prop
+const News = ({ cmsArticles = [], pageData }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [containerWidth, setContainerWidth] = useState(500);
   const [expandedArticleId, setExpandedArticleId] = useState(null);
@@ -18,11 +18,9 @@ const News = ({ cmsArticles = [] }) => {
   const router = useRouter();
 
   useEffect(() => {
-    // Check URL for expanded article
     const articleSlugFromUrl = searchParams.get("article");
     setExpandedArticleId(articleSlugFromUrl || null);
 
-    // Initial width calculation for Facebook Plugin
     const calculateWidth = () => {
       const w = Math.min(500, window.innerWidth > 40 ? window.innerWidth - 40 : 500);
       setContainerWidth(w);
@@ -30,7 +28,6 @@ const News = ({ cmsArticles = [] }) => {
 
     calculateWidth();
     
-    // Simulate loading delay for effect (optional)
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 1000);
@@ -48,7 +45,6 @@ const News = ({ cmsArticles = [] }) => {
     const newExpandedId = expandedArticleId === slug ? null : slug;
     setExpandedArticleId(newExpandedId);
 
-    // Update URL without reloading page
     if (newExpandedId) {
       router.push(`/news?article=${newExpandedId}`, { scroll: false });
     } else {
@@ -67,11 +63,13 @@ const News = ({ cmsArticles = [] }) => {
         </div>
       ) : (
         <>
-          <div className="semi-final-image-container">
-            <img src={semiFinalImage} alt="Shamrocks Rugby Action" className="semi-final-image" />
-          </div>
+          {/* FIX: Now using pageData.topImage straight from Sanity! */}
+          {pageData && pageData.topImage && (
+            <div className="semi-final-image-container">
+              <img src={pageData.topImage} alt="Shamrocks News" className="semi-final-image" />
+            </div>
+          )}
 
-          {/* Facebook Plugin */}
           <div className="fb-page-container">
             <FacebookPageWrapper
               fbPageUrl="https://www.facebook.com/OldTownShamrocks/"
@@ -81,7 +79,6 @@ const News = ({ cmsArticles = [] }) => {
             />
           </div>
 
-          {/* CMS Articles List */}
           <div className="articles-container" style={{ maxWidth: '800px', margin: '32px auto', backgroundColor: '#000', padding: '16px', borderRadius: '8px' }}>
             <h2 style={{ color: '#ffffff', marginBottom: '24px', textAlign: 'center', fontSize: '2em' }}>ARTICLES</h2>
             
@@ -89,18 +86,15 @@ const News = ({ cmsArticles = [] }) => {
               cmsArticles.map(article => (
                 <div key={article._id} className="expandable-article-item-wrapper">
                   <ExpandableNewsArticle
-                    id={article.slug} // Use slug as ID
+                    id={article.slug} 
                     title={article.title}
                     date={article.date}
                     content={article.content}
                     language="fi"
-                    // Map Sanity image to the format your component expects
                     images={[
-                              // 1. Add the Main Image first (if it exists)
-                              ...(article.mainImage ? [{ src: article.mainImage, alt: article.title }] : []),
-                              // 2. Add all Additional Images (if they exist)
-                              ...(article.additionalImages ? article.additionalImages.map(img => ({ src: img, alt: "Gallery" })) : [])
-                            ]}
+                      ...(article.mainImage ? [{ src: article.mainImage, alt: article.title }] : []),
+                      ...(article.additionalImages ? article.additionalImages.map(img => ({ src: img, alt: "Gallery" })) : [])
+                    ]}
                     isExpanded={expandedArticleId === article.slug}
                     onExpand={() => handleExpandArticle(article.slug)}
                   />

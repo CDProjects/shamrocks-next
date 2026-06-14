@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { usePathname } from 'next/navigation'; // Changed from react-router-dom
+import { usePathname } from 'next/navigation'; // Changed from react-router-dom for Next.js
 import './Footer.css';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -9,32 +9,42 @@ import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/autoplay';
 
-import { sponsors, transformCloudinaryUrl } from './SponsorData';
+// REMOVED: import { sponsors, transformCloudinaryUrl } from './SponsorData';
+// We no longer need the local data file because we are getting sponsors directly from the CMS!
 
-const Footer = () => {
-  // 1. Get the current URL path
+/* 
+  Accepting 'sponsors' as a prop. 
+  This data trickles down from layout.tsx -> ClientLayout.js -> Footer.js 
+*/
+const Footer = ({ sponsors = [] }) => {
+  // Get the current URL path using Next.js hook
   const pathname = usePathname();
   
-  // 2. Update logic to use 'pathname' instead of 'location.pathname'
+  // Check which page we are on
   const isTeamPage = pathname === '/team';
   const isHomePage = pathname === '/';
 
   const slides = [];
+  
+  // Ensure we actually have sponsors from the CMS before trying to loop through them
   if (sponsors && sponsors.length > 0) {
     sponsors.forEach((sponsor, index) => {
-      // Logic remains exactly the same as before
-      if (sponsor.logoBaseUrl && sponsor.logoBaseUrl !== 'https://res.cloudinary.com/dscbso60s/image/upload/v1750091454/Lindos_srvg8h.png') {
-          const logoUrl = transformCloudinaryUrl(sponsor.logoBaseUrl, 'h_50,f_auto,q_auto,c_limit');
+      
+      // Instead of hardcoding "Lindos" to not show up, we check the CMS boolean 'showInFooter'
+      // This gives the board members control over which logos go in the carousel vs the grid.
+      if (sponsor.logoUrl && sponsor.showInFooter !== false) {
           slides.push(
-            <SwiperSlide key={sponsor.id} className="sponsor-logo-slide">
+            // Use the Sanity document _id as the key to prevent React rendering errors
+            <SwiperSlide key={sponsor._id || index} className="sponsor-logo-slide">
               <a href={sponsor.url} target="_blank" rel="noopener noreferrer" title={`Visit ${sponsor.name}`}>
-                {/* We keep standard <img> for now to preserve your CSS styling */}
-                <img src={logoUrl} alt={sponsor.name} className="sponsor-carousel-image" />
+                <img src={sponsor.logoUrl} alt={sponsor.name} className="sponsor-carousel-image" />
               </a>
             </SwiperSlide>
           );
       }
       
+      // Only add the "Scroll down for all of our sponsors!" text slide on the home page.
+      // The math here injects the text slide evenly amongst the logos.
       if (isHomePage && ((index + 1) % 4 === 0 || (index === sponsors.length -1 && slides.filter(s => s.props.className === "sponsor-text-slide").length === 0 ) ) ) {
         slides.push(
           <SwiperSlide key={`text-${index}`} className="sponsor-text-slide">

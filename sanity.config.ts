@@ -12,6 +12,8 @@ import touchPage from './src/sanity/schemas/touchPage'
 import fixturesPage from './src/sanity/schemas/fixturesPage'
 import contactPage from './src/sanity/schemas/contactPage'
 import medRecPage from './src/sanity/schemas/medRecPage'
+import sponsor from './src/sanity/schemas/sponsor'
+import newsPage from './src/sanity/schemas/newsPage'
 
 export default defineConfig({
   name: 'default',
@@ -36,7 +38,9 @@ export default defineConfig({
       touchPage, 
       fixturesPage,
       contactPage, 
-      medRecPage
+      medRecPage,
+      sponsor,
+      newsPage
     ]
   },
 })
