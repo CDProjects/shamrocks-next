@@ -1,65 +1,74 @@
 "use client";
 
 import React, { useEffect, useRef } from 'react';
-import Script from 'next/script'; // Import Next.js Script component
 
 const FacebookPageWrapper = ({ fbPageUrl, tabs, width, height }) => {
   const containerRef = useRef(null);
 
-  // Function to tell Facebook to render the widget
-  const parseXFBML = () => {
+  useEffect(() => {
+    // 1. Function to parse the widget
+    const parseXFBML = () => {
+      if (window.FB && containerRef.current) {
+        window.FB.XFBML.parse(containerRef.current);
+      }
+    };
+
+    // 2. If the SDK is already loaded (e.g. navigating back from another page)
+    if (window.FB) {
+      parseXFBML();
+      return;
+    }
+
+    // 3. If SDK is NOT loaded, inject it EXACTLY like your old React app did
+    if (!document.getElementById('facebook-jssdk')) {
+      // Set up the initialization callback BEFORE the script loads
+      window.fbAsyncInit = function() {
+        window.FB.init({
+          xfbml: true,
+          version: 'v20.0'
+        });
+        parseXFBML();
+      };
+
+      const script = document.createElement('script');
+      script.id = 'facebook-jssdk';
+      script.src = 'https://connect.facebook.net/en_GB/sdk.js';
+      script.async = true;
+      script.defer = true;
+      
+      document.body.appendChild(script);
+    }
+  }, []); // Run only on mount
+
+  // 4. Re-parse if the screen width changes (so it resizes correctly)
+  useEffect(() => {
     if (window.FB && containerRef.current) {
       window.FB.XFBML.parse(containerRef.current);
     }
-  };
-
-  // Re-parse if the width changes (e.g. rotating a mobile phone)
-  useEffect(() => {
-    parseXFBML();
   }, [width, height, fbPageUrl]);
 
   return (
-    <>
-      {/* The Next.js way to safely load the Facebook SDK */}
-      <Script 
-        id="facebook-jssdk" 
-        src="https://connect.facebook.net/en_GB/sdk.js" 
-        strategy="lazyOnload" // Loads in the background so it doesn't slow down your site
-        onLoad={() => {
-          // Once the script downloads, initialize it and parse the widget
-          if (window.FB) {
-            window.FB.init({
-              xfbml: true,
-              version: 'v20.0'
-            });
-            parseXFBML();
-          }
-        }}
-      />
-
-      {/* The actual Facebook Widget HTML */}
+    <div 
+      ref={containerRef} 
+      key={width} 
+      style={{ display: 'flex', justifyContent: 'center', minHeight: height + 'px', width: '100%' }}
+    >
       <div 
-        ref={containerRef} 
-        key={width} 
-        style={{ display: 'flex', justifyContent: 'center', minHeight: height + 'px', width: '100%' }}
+        className="fb-page" 
+        data-href={fbPageUrl}
+        data-tabs={tabs}
+        data-width={width}
+        data-height={height}
+        data-small-header="false"
+        data-adapt-container-width="true"
+        data-hide-cover="false"
+        data-show-facepile="true"
       >
-        <div 
-          className="fb-page" 
-          data-href={fbPageUrl}
-          data-tabs={tabs}
-          data-width={width}
-          data-height={height}
-          data-small-header="false"
-          data-adapt-container-width="true"
-          data-hide-cover="false"
-          data-show-facepile="true"
-        >
-          <blockquote cite={fbPageUrl} className="fb-xfbml-parse-ignore">
-            <a href={fbPageUrl}>Old Town Shamrocks Porvoo</a>
-          </blockquote>
-        </div>
+        <blockquote cite={fbPageUrl} className="fb-xfbml-parse-ignore">
+          <a href={fbPageUrl}>Old Town Shamrocks Porvoo</a>
+        </blockquote>
       </div>
-    </>
+    </div>
   );
 };
 
