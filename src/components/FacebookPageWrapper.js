@@ -6,22 +6,28 @@ const FacebookPageWrapper = ({ fbPageUrl, tabs, width, height }) => {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    // 1. Function to parse the widget
+    // 1. CRITICAL FIX: Facebook SDK requires a div with id="fb-root" to exist on the page.
+    if (!document.getElementById('fb-root')) {
+      const fbRoot = document.createElement('div');
+      fbRoot.id = 'fb-root';
+      document.body.appendChild(fbRoot);
+    }
+
+    // 2. Function to parse the widget
     const parseXFBML = () => {
       if (window.FB && containerRef.current) {
         window.FB.XFBML.parse(containerRef.current);
       }
     };
 
-    // 2. If the SDK is already loaded (e.g. navigating back from another page)
+    // 3. If the SDK is already loaded (e.g. navigating back from another page)
     if (window.FB) {
       parseXFBML();
       return;
     }
 
-    // 3. If SDK is NOT loaded, inject it EXACTLY like your old React app did
+    // 4. If SDK is NOT loaded, inject it EXACTLY like your old React app did
     if (!document.getElementById('facebook-jssdk')) {
-      // Set up the initialization callback BEFORE the script loads
       window.fbAsyncInit = function() {
         window.FB.init({
           xfbml: true,
@@ -40,7 +46,7 @@ const FacebookPageWrapper = ({ fbPageUrl, tabs, width, height }) => {
     }
   }, []); // Run only on mount
 
-  // 4. Re-parse if the screen width changes (so it resizes correctly)
+  // 5. Re-parse if the screen width changes (so it resizes correctly)
   useEffect(() => {
     if (window.FB && containerRef.current) {
       window.FB.XFBML.parse(containerRef.current);
